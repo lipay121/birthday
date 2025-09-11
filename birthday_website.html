@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(180deg, #bde7ff 0%, #d6f1ff 60%, #fefefe 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            padding-top: 32px;
+        }
+
+        .cake-scene {
+            position: relative;
+            animation: slideInUp 2s ease-out;
+            z-index: 3;
+            margin-top: 0;
+            padding-bottom: 120px;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cake {
+            width: 300px;
+            height: 150px;
+            background: linear-gradient(#8d5c4a 0 0) top/100% 20px no-repeat,
+                        linear-gradient(#9a6752 0 0) calc(50% + 5px) 40px/98% 18px no-repeat,
+                        linear-gradient(#a7725a 0 0) 50% 70px/96% 18px no-repeat,
+                        linear-gradient(#b07c61 0 0) 50% 100px/94% 18px no-repeat,
+                        #c28b6c;
+            border-radius: 18px 18px 14px 14px;
+            margin: 24px auto 0;
+            position: relative;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.20);
+        }
+
+        .cake:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -26px;
+            height: 70px;
+            background: linear-gradient(#fff 0 0);
+            border-radius: 18px 18px 0 0;
+            -webkit-mask:
+              radial-gradient(18px 18px at 30px 40px, #000 98%, transparent 101%) top left/60px 40px repeat-x,
+              linear-gradient(#000 0 0);
+            mask:
+              radial-gradient(18px 18px at 30px 40px, #000 98%, transparent 101%) top left/60px 40px repeat-x,
+              linear-gradient(#000 0 0);
+            -webkit-mask-composite: destination-out, source-over;
+                    mask-composite: exclude, add;
+            z-index: 2; /* ensure icing sits in front of candle */
+        }
+
+        .cake:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -20px;
+            width: 360px;
+            height: 26px;
+            background: linear-gradient(180deg,#ffd36e,#f7b731);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+        }
+
+        .cake-layer { display: none; }
+
+        .candle {
+            width: 16px;
+            height: 82px;
+            background: repeating-linear-gradient(45deg,#ffdede 0 10px,#ffadc2 10px 20px);
+            position: absolute;
+            top: -82px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 0 rgba(0,0,0,0.05) inset;
+            z-index: 1; /* keep candle behind icing */
+        }
+
+        .candle:hover {
+            /* no scale on hover/click */
+            transform: translateX(-50%);
+        }
+
+        .flame {
+            width: 28px;
+            height: 38px;
+            background: radial-gradient(circle at 50% 60%, #ffd37a 0%, #ff9f45 50%, #ff5e28 70%, rgba(255,94,40,0) 72%),
+                        radial-gradient(circle at 50% 80%, #fff 0%, rgba(255,255,255,0) 60%);
+            border-radius: 50% 50% 50% 50% / 70% 70% 40% 40%;
+            position: absolute;
+            top: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 1s infinite alternate;
+            filter: drop-shadow(0 0 12px rgba(255,170,0,0.8));
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+        }
+
+        .balloon {
+            width: 92px;
+            height: 120px;
+            background: radial-gradient(circle at 30% 35%, rgba(255,255,255,0.9) 0 22%, transparent 24%),
+                        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.35) 0 20%, transparent 22%),
+                        linear-gradient(45deg, #ff8f6b, #ff5a7a);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -170px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 12px 22px rgba(0,0,0,0.15);
+        }
+
+        .balloon:hover {
+            transform: translateX(-50%);
+            filter: brightness(1.06);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+
+        .balloon-string {
+            width: 2px;
+            height: 60px;
+            background: repeating-linear-gradient(180deg,#ffffff 0 6px,#ff8faf 6px 12px);
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .flowers-container {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            width: 400px;
+            height: 200px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 7;
+        }
+
+        .flowers-container.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+        }
+
+        .flower {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .flower.bloom {
+            animation: bloomFlower 2s ease-out forwards;
+        }
+
+        .flower:nth-child(1) { left: 20px; animation-delay: 0.2s; }
+        .flower:nth-child(2) { left: 80px; animation-delay: 0.4s; }
+        .flower:nth-child(3) { left: 140px; animation-delay: 0.6s; }
+        .flower:nth-child(4) { left: 200px; animation-delay: 0.8s; }
+        .flower:nth-child(5) { left: 260px; animation-delay: 1s; }
+        .flower:nth-child(6) { left: 320px; animation-delay: 1.2s; }
+
+        @keyframes bloomFlower {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        .flower-petal {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border-radius: 50% 0;
+            position: absolute;
+        }
+
+        .flower-petal:nth-child(1) { transform: rotate(0deg); top: 0; left: 20px; }
+        .flower-petal:nth-child(2) { transform: rotate(72deg); top: 6px; left: 38px; }
+        .flower-petal:nth-child(3) { transform: rotate(144deg); top: 24px; left: 32px; }
+        .flower-petal:nth-child(4) { transform: rotate(216deg); top: 24px; left: 8px; }
+        .flower-petal:nth-child(5) { transform: rotate(288deg); top: 6px; left: 2px; }
+
+        .flower-center {
+            width: 15px;
+            height: 15px;
+            background: #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            top: 22px;
+            left: 22px;
+        }
+
+        .message-scene {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .paper {
+            width: 760px;
+            max-width: calc(100vw - 48px);
+            min-height: 420px;
+            background: linear-gradient(180deg, #fffef7 0%, #fffaf0 100%);
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+            position: relative;
+            padding: 40px 36px;
+            animation: unfold 900ms ease-out;
+        }
+
+        @keyframes unfold {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .wish-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: #333;
+        }
+
+        .wish-card .title-1 {
+            font-family: 'Amatic SC', cursive;
+            font-size: 52px;
+            color: #ff1493;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .wish-card .title-2 {
+            font-family: 'Amatic SC', cursive;
+            font-size: 38px;
+            color: #ee5a52;
+            text-align: center;
+            margin-top: -6px;
+        }
+
+        .wish-card .content {
+            margin-top: 8px;
+            padding: 18px 14px;
+            background: rgba(255, 245, 248, 0.8);
+            border: 1px dashed #ffc0cb;
+            border-radius: 14px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 22px;
+            line-height: 1.65;
+        }
+
+        .wish-card .signature {
+            text-align: right;
+            margin-top: 6px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 22px;
+            color: #777;
+        }
+
+        .title { display: none; }
+
+        .hb-banner {
+            width: clamp(200px, 32vw, 360px);
+            margin: 8px auto 6px;
+            display: block;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 6px 16px rgba(0,0,0,.15));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .instructions { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); background: #ff8fb1; color: #fff; padding: 12px 22px; border-radius: 999px; font-size: 16px; animation: pulse 2s infinite; max-width: 360px; box-shadow: 0 10px 24px rgba(255,143,177,0.4); z-index: 6; }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+        /* Balloon gift (side) */
+        /* Side balloon carrying gift */
+        .side-balloon { position: absolute; top: -60px; width: 80px; display: grid; justify-items: center; align-items: start; z-index: 4; line-height: 0; animation: floatSide 3.6s ease-in-out infinite; transform-origin: top center; gap: 0; }
+        .side-balloon.left { left: 9vw; }
+        .side-balloon.right { right: 9vw; }
+        .side-balloon .balloon { width: 66px; height: 92px; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.85) 0 18%, rgba(255,255,255,0) 22%), radial-gradient(circle at 70% 60%, rgba(255,255,255,.35) 0 20%, rgba(255,255,255,0) 22%), linear-gradient(160deg, #ffa94d 0%, #ff6b6b 55%, #e64980 100%); border-radius: 50% 50% 45% 45%; box-shadow: 0 14px 28px rgba(0,0,0,.18); cursor: pointer; filter: saturate(1.06); position: relative; top: auto; left: auto; transform: translateX(4px); animation: none; }
+        .side-balloon .balloon:hover { transform: translateX(4px); filter: saturate(1.06); }
+        .side-balloon .balloon:after { content:""; position:absolute; left:10px; top:16px; width:18px; height:34px; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,0)); border-radius: 12px; filter: blur(.4px); opacity:.9; }
+        .side-balloon .knot { width: 16px; height: 8px; background: #e66767; border-radius: 50% 50% 40% 40%; margin: -6px 0 0; }
+        .side-balloon .string { width: 3px; height: 88px; background: repeating-linear-gradient(180deg,#bbb 0 6px,#fff 6px 12px); box-shadow: 0 0 1px rgba(0,0,0,.15); margin: -2px 0 0; border-radius: 2px; }
+        .side-balloon .gift { width: 56px; height: 56px; background: linear-gradient(135deg, #fbc2eb 60%, #a6c1ee 100%); border-radius: 8px 8px 12px 12px; box-shadow: 0 10px 22px rgba(31,38,135,.18); position: relative; margin-top: 0; }
+        .side-balloon .gift:before { content:""; position:absolute; top:-5px; left:50%; transform:translateX(-50%); width:8px; height:6px; background:#bbb; border-radius:4px; }
+        .side-balloon .gift .lid { position: absolute; top: -12px; left: 0; right: 0; height: 16px; background: #e66767; border-radius: 7px 7px 5px 5px; transform-origin: left bottom; transition: transform .5s cubic-bezier(.4,2,.6,1); }
+        .side-balloon .gift .ribbon { position: absolute; left: 50%; top: 0; width: 8px; height: 56px; background: #fff; border-radius: 4px; transform: translateX(-50%); }
+        .side-balloon .gift.open .lid { transform: rotate(-60deg) translateY(-20px); }
+        .balloon-gift .gift:hover { transform: translateY(-2px); }
+        .balloon-gift .gift .lid { position: absolute; top: -12px; left: 0; right:0; height: 16px; background: #e66767; border-radius: 7px 7px 5px 5px; }
+        .balloon-gift .gift .ribbon { position: absolute; left: 50%; top: 0; width: 8px; height: 48px; background: #fff; border-radius: 4px; transform: translateX(-50%); }
+        .balloon-gift .gift.open .lid { transform: rotate(-60deg) translateY(-20px); transform-origin: left bottom; transition: transform .5s cubic-bezier(.4,2,.6,1); }
+
+        @keyframes floatSide {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Scoped gift.html cake */
+        .giftcake { position: relative; margin-top: 20px; }
+        .giftcake .cake { background: #ffffff; border-radius: 10px; position: absolute; top: 0; left: 50%; margin-left: -2.4px; width: 5px; height: 35px; transform: translateY(-200px); backface-visibility: hidden; animation: g_in 500ms 600ms ease-out forwards; }
+        .giftcake .cake:after, .giftcake .cake:before { background: rgba(255,0,0,0.4); content: ""; position: absolute; width: 100%; height: 2.22222px; }
+        .giftcake .cake:after { top: 25%; }
+        .giftcake .cake:before { top: 45%; }
+        .giftcake .fuego { border-radius: 100%; position: absolute; top: -15px; left: 50%; margin-left: -2.6px; width: 6.6667px; height: 18px; animation: g_fuego 2s 1100ms infinite; }
+        .giftcake .fuego:nth-child(2){ animation-duration:1.5s }
+        .giftcake .fuego:nth-child(3){ animation-duration:1s }
+        .giftcake .fuego:nth-child(4){ animation-duration:.5s }
+        .giftcake .fuego:nth-child(5){ animation-duration:.2s }
+        @keyframes g_fuego { 0%,100%{ background: rgba(254,248,97,.5); box-shadow:0 0 40px 10px rgba(248,233,209,.2); transform: translateY(0) scale(1);} 50%{ background: rgba(255,50,0,.1); box-shadow:0 0 40px 20px rgba(248,233,209,.2); transform: translateY(-20px) scale(0);} }
+        @keyframes g_in { to { transform: translateY(100px); } }
+        .giftcake svg { display:block; margin: -140px auto 0; width: 220px; height: 520px; }
+        /* Rainbow */
+        .rainbow {
+            position: absolute;
+            right: -140px;
+            bottom: -220px;
+            width: 560px;
+            height: 560px;
+            background:
+              radial-gradient(closest-side at 50% 50%, transparent 69%, #ff6ec7 70% 77%, transparent 78%),
+              radial-gradient(closest-side at 50% 50%, transparent 60%, #ffd166 61% 68%, transparent 69%),
+              radial-gradient(closest-side at 50% 50%, transparent 51%, #7ed957 52% 59%, transparent 60%),
+              radial-gradient(closest-side at 50% 50%, transparent 42%, #6ecbff 43% 50%, transparent 51%),
+              radial-gradient(closest-side at 50% 50%, transparent 33%, #b388ff 34% 41%, transparent 42%),
+              radial-gradient(closest-side at 50% 50%, transparent 24%, #ff9aa2 25% 32%, transparent 33%);
+            border-radius: 50%;
+            opacity: .7;
+            pointer-events: none;
+        }
+
+        /* Clouds */
+        .clouds { z-index: 0; }
+        .clouds .cloud {
+            position: absolute;
+            width: 200px;
+            height: 110px;
+            background: #fff;
+            border-radius: 80px;
+            box-shadow:
+              40px 10px 0 10px #fff,
+              100px 20px 0 0 #fff,
+              150px -10px 0 20px #fff,
+              200px 10px 0 0 #fff;
+            filter: drop-shadow(0 8px 18px rgba(0,0,0,.08));
+        }
+
+        /* Confetti */
+        .confetti { position: absolute; inset: 0; pointer-events: none; }
+        .confetti span {
+            position: absolute;
+            width: 8px; height: 14px;
+            background: #ff7eb3;
+            top: -20px;
+            left: calc(10% * var(--i,1));
+            animation: fall 4s linear infinite;
+            transform: rotate(15deg);
+        }
+        .confetti span:nth-child(2){ background:#ffd166; --i:2; animation-delay:.4s }
+        .confetti span:nth-child(3){ background:#7ed957; --i:3; animation-delay:.8s }
+        .confetti span:nth-child(4){ background:#6ecbff; --i:4; animation-delay:1.2s }
+        .confetti span:nth-child(5){ background:#b388ff; --i:5; animation-delay:1.6s }
+        .confetti span:nth-child(6){ background:#ff9aa2; --i:6; animation-delay:2s }
+        .confetti span:nth-child(7){ background:#ffd166; --i:7; animation-delay:2.4s }
+        .confetti span:nth-child(8){ background:#7ed957; --i:8; animation-delay:2.8s }
+        .confetti span:nth-child(9){ background:#6ecbff; --i:9; animation-delay:3.2s }
+        .confetti span:nth-child(10){ background:#b388ff; --i:10; animation-delay:3.6s }
+        @keyframes fall {
+            0% { transform: translateY(-40px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(120vh) rotate(360deg); opacity: .9; }
+        }
+
+        /* CTA button under cake */
+        .cta-wrap { margin-top: 24px; }
+        .cta-btn {
+            padding: 12px 22px; border: 0; border-radius: 999px;
+            background: #ff8fb1; color: #fff; cursor: pointer;
+            font-size: 16px; box-shadow: 0 10px 24px rgba(255,143,177,.35);
+        }
+        .cta-btn:hover{ filter: brightness(1.05); }
+
+        /* Responsive: small screens */
+        @media (max-width: 600px) {
+            .hb-banner { width: 68vw; margin-top: 10px; }
+            .cake { width: 74vw; height: calc(74vw * 0.5); margin-top: 18px; }
+            .cake:after { width: 86vw; height: 22px; bottom: -16px; }
+            .candle { top: -72px; }
+            .flame { top: -36px; }
+            .side-balloon.left { left: 6vw; }
+            .side-balloon.right { right: 6vw; }
+            .side-balloon .balloon { width: 48px; height: 66px; }
+            .side-balloon .string { height: 72px; }
+            .side-balloon .gift { width: 44px; height: 44px; }
+            .side-balloon .gift .ribbon { height: 44px; }
+            .instructions { bottom: 12px; padding: 10px 18px; font-size: 14px; }
+            .rainbow { right: -80px; bottom: -160px; width: 420px; height: 420px; opacity: .6; }
+            .cake-scene { padding-bottom: 160px; }
+            .flowers-container { bottom: -60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container px-3 px-md-4">
+        <div class="rainbow" aria-hidden="true"></div>
+        <div class="clouds" aria-hidden="true">
+            <div class="cloud" style="top:20px;left:80px;"></div>
+            <div class="cloud" style="top:60px;right:120px;width:220px;height:120px;"></div>
+            <div class="cloud" style="top:220px;left:40px;width:260px;height:140px;"></div>
+            <div class="cloud" style="top:260px;right:80px;width:230px;height:130px;"></div>
+        </div>
+        <div class="confetti" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <img class="hb-banner img-fluid d-block mx-auto" src="bg.png" alt="Happy Birthday"/>
+        
+        <div class="cake-scene" id="cakeScene">
+            <div class="side-balloon left" id="sideBalloonLeft">
+                <div class="balloon"></div>
+                <div class="knot"></div>
+                <div class="string"></div>
+                <div class="gift" id="sideGiftLeft">
+                    <div class="lid"></div>
+                    <div class="ribbon"></div>
+                </div>
+            </div>
+            <div class="side-balloon right" id="sideBalloonRight">
+                <div class="balloon"></div>
+                <div class="knot"></div>
+                <div class="string"></div>
+                <div class="gift" id="sideGiftRight">
+                    <div class="lid"></div>
+                    <div class="ribbon"></div>
+                </div>
+            </div>
+            
+            <div class="cake">
+                <div class="cake-layer"></div>
+                <div class="candle" id="candle">
+                    <div class="flame" id="flame"></div>
+                </div>
+            </div>
+
+            
+
+            <div class="flowers-container" id="flowersContainer">
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+                <div class="flower">
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-petal"></div>
+                    <div class="flower-center"></div>
+                </div>
+            </div>
+
+            <div class="instructions shadow-lg rounded-pill px-4 py-2" id="instructions">Buka kadonya! 🎁</div>
+        </div>
+
+        <div class="message-scene" id="messageScene">
+            <div class="paper">
+                <div class="wish-card">
+                    <div class="title-1">Barakallah fii umrik</div>
+                    <div class="title-2">AWA</div>
+                    <div class="content">
+                        <p>Di hari kelahiranmu, semoga Allah</p>
+                        <p>mengaruniakanmu kebahagiaan,</p>
+                        <p>kesehatan dan umur panjang. Serta</p>
+                        <p>Semoga Allah senantiasa memberkahi</p>
+                        <p>setiap langkahmu dan setiap usaha</p>
+                        <p>yang kamu lakukan mendapatkan</p>
+                        <p>ridha-Nya. Dan semoga semua</p>
+                        <p>impianmu dapat tercapai dan</p>
+                        <p>Allah memudahkan semua segala</p>
+                        <p>urusan dunia dan akhirat. Aamiin,</p>
+                    </div>
+                    <div class="signature">~Doa terbaik untukmu.~</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameState = 'balloon'; // balloon -> flowers -> candle -> message
+        
+        const sideBalloonLeft = document.getElementById('sideBalloonLeft');
+        const sideBalloonRight = document.getElementById('sideBalloonRight');
+        const sideGiftLeft = document.getElementById('sideGiftLeft');
+        const sideGiftRight = document.getElementById('sideGiftRight');
+        const candle = document.getElementById('candle');
+        const flame = document.getElementById('flame');
+        const flowersContainer = document.getElementById('flowersContainer');
+        const cakeScene = document.getElementById('cakeScene');
+        const messageScene = document.getElementById('messageScene');
+        const instructions = document.getElementById('instructions');
+
+        // Pastikan posisi kembali normal saat reload atau kembali dari halaman ucapan
+        function resetScene(){
+            // If returning from bunga.html, resume at candle step
+            var afterFlowers = false;
+            try { afterFlowers = localStorage.getItem('afterFlowers') === 'true'; } catch(e) {}
+
+            gameState = afterFlowers ? 'candle' : 'balloon';
+            // reset balloons & gifts
+            [sideBalloonLeft, sideBalloonRight].forEach(function(el){
+                if (afterFlowers) {
+                    el.style.display = 'none';
+                    el.style.opacity = '0';
+                } else {
+                    el.style.opacity = '';
+                    el.style.transform = '';
+                    el.style.display = '';
+                }
+            });
+            [sideGiftLeft, sideGiftRight].forEach(function(g){ if(g) g.classList.remove('open'); });
+
+            // reset flowers
+            flowersContainer.classList.remove('show');
+            flowersContainer.querySelectorAll('.flower').forEach(function(f){ f.classList.remove('bloom'); });
+
+            // reset candle/flame
+            flame.style.animation = '';
+            flame.style.transform = '';
+            flame.style.opacity = '';
+
+            // reset scene container
+            cakeScene.style.animation = '';
+            cakeScene.style.display = '';
+
+            // reset instructions
+            if (afterFlowers) {
+                instructions.innerHTML = 'Sekarang tiup lilinnya! 🕯️';
+                instructions.style.animation = '';
+                // clear the flag so refresh doesn't keep skipping
+                try { localStorage.removeItem('afterFlowers'); } catch(e) {}
+            } else {
+                instructions.innerHTML = 'Buka kadonya! 🎁';
+                instructions.style.animation = '';
+            }
+        }
+
+        // Run on load and when navigating back from cache
+        window.addEventListener('DOMContentLoaded', resetScene);
+        window.addEventListener('pageshow', function(e){ if (e.persisted) resetScene(); });
+
+        // Efek suara menggunakan Web Audio API
+        function playPopSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.3);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        function playBlowSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.8);
+            
+            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.8);
+        }
+
+        function handleBalloonClick(balloonEl, giftEl){
+            if (gameState !== 'balloon') return;
+            playPopSound();
+            if (giftEl) giftEl.classList.add('open');
+            // fade out BOTH side balloons together
+            [sideBalloonLeft, sideBalloonRight].forEach(function(el){
+                el.style.transition = 'opacity .35s ease, transform .35s ease';
+                el.style.transform = 'translateY(-8px)';
+                setTimeout(()=>{ el.style.opacity = '0'; }, 80);
+                setTimeout(()=>{ el.style.display='none'; }, 500);
+            });
+
+            // Go to bunga.html to show flowers animation; that page will return here
+            setTimeout(function(){ window.location.href = 'bunga.html'; }, 380);
+        }
+
+        sideBalloonLeft.addEventListener('click', function(){ handleBalloonClick(sideBalloonLeft, sideGiftLeft); });
+        sideBalloonRight.addEventListener('click', function(){ handleBalloonClick(sideBalloonRight, sideGiftRight); });
+
+        // Event listener untuk lilin
+        candle.addEventListener('click', function() {
+            if (gameState === 'candle') {
+                playBlowSound();
+                
+                // Animasi api padam
+                flame.style.animation = 'none';
+                flame.style.transform = 'translateX(-50%) scale(0.1)';
+                flame.style.opacity = '0';
+                
+                instructions.innerHTML = 'Lilin sudah padam! 🎂';
+                
+                setTimeout(() => {
+                    // Transisi ke scene pesan
+                    cakeScene.style.animation = 'fadeOut 1.5s ease-out forwards';
+                    
+                    setTimeout(() => {
+                        cakeScene.style.display = 'none';
+                        // Arahkan ke halaman isi.html setelah transisi
+                        window.location.href = 'isi.html';
+                    }, 1500);
+                    
+                }, 1000);
+            }
+        });
+
+        // Mencegah klik pada lilin sebelum balon diklik
+        candle.addEventListener('click', function(e) {
+            if (gameState !== 'candle') {
+                e.preventDefault();
+                if (gameState === 'balloon') {
+                    instructions.innerHTML = 'Klik balon dulu! 🎈';
+                    instructions.style.animation = 'none';
+                    instructions.offsetHeight; // trigger reflow
+                    instructions.style.animation = 'pulse 0.5s ease-in-out 3';
+                } else if (gameState === 'flowers') {
+                    instructions.innerHTML = 'Tunggu bunga selesai mekar! 🌸';
+                    instructions.style.animation = 'none';
+                    instructions.offsetHeight; // trigger reflow
+                    instructions.style.animation = 'pulse 0.5s ease-in-out 3';
+                }
+            }
+        });
+
+        // Efek hover (opsional)
+
+        candle.addEventListener('mouseenter', function() {
+            if (gameState === 'candle') {
+                this.style.filter = 'brightness(1.2)';
+                flame.style.filter = 'brightness(1.3)';
+            }
+        });
+
+        candle.addEventListener('mouseleave', function() {
+            this.style.filter = 'brightness(1)';
+            flame.style.filter = 'brightness(1)';
+        });
+    </script>
+</body>
+</html>
